@@ -1,0 +1,22 @@
+.main{
+    margin: 25px auto;
+    width: 100vw;
+    min-height: calc(85vh);
+    max-width: 1200px;
+    background-color: rgb(237, 237, 237);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 2rem;
+
+}
+
+.main-stack{
+    width: 600px;
+    max-width: 100%;
+    margin-top: 1rem;
+        
+}
