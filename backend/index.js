@@ -14,9 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
+
 const configuration = new Configuration({
-   apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
 });
+
 
 const openai = new OpenAIApi(configuration);
 
@@ -30,25 +32,35 @@ app.get("/", (req, res) => {
 
 app.post("/generate", async (req, res) => {
    const { prompt, size } = req.body;
-   //    validation
-   if (!prompt || !size) {
-      return res.status(400).send("Bad Request");
-   }
-   try {
-      const response = await openai.createImage({
-         prompt,
-         size,
-         n: 1,
-         
-      });
-      const image_url = response.data.data[0].url;
 
-      return res.status(200).send({
-         src: image_url,
-      });
+   const imageSize =
+     size === 'small' ? '256x256' : size === 'medium' ? '512x512' : '1024x1024';
+ 
+   try {
+     const response = await openai.createImage({
+       prompt,
+       n: 1,
+       size: imageSize,
+     });
+ 
+     const imageUrl = response.data.data[0].url;
+ 
+     res.status(200).json({
+       success: true,
+       data: imageUrl,
+     });
    } catch (error) {
-      console.log(error);
-      return res.status(500).send({ error });
+     if (error.response) {
+       console.log(error.response.status);
+       console.log(error.response.data);
+     } else {
+       console.log(error.message);
+     }
+ 
+     res.status(400).json({
+       success: false,
+       error: 'The image could not be generated',
+     });
    }
 });
 
